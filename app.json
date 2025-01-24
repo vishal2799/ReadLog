@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "reading-app",
-    "slug": "reading-app",
+    "name": "readlog",
+    "slug": "readlog",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "readlog",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.vishal2799.readlog"
     },
     "web": {
       "bundler": "metro",
