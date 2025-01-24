@@ -4,6 +4,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Text, View } from 'react-native';
 
 import { FC } from 'react';
+import { BooksProvider } from '@/context/BooksContext';
 
 interface TabIconProps {
   icon: string;
@@ -34,6 +35,7 @@ const TabLayout = () => {
   
   return (
     <>
+    <BooksProvider>
     <Tabs screenOptions={{
           tabBarActiveTintColor: "#FF6F61",
           tabBarInactiveTintColor: "#4A4A4A",
@@ -107,6 +109,7 @@ const TabLayout = () => {
             ),
           }}/>
     </Tabs>
+    </BooksProvider>
     </>
   )
 }

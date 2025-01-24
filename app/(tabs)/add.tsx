@@ -17,10 +17,11 @@ import { router } from 'expo-router';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { addBook } from '@/lib/appwrite';
 import { StatusBar } from 'expo-status-bar';
+import { useBooks } from '@/context/BooksContext';
 
 const add = () => {
   const { user } = useGlobalContext();
-
+  const { refetch } = useBooks();
   const [form, setForm] = useState({
     title: '',
     author: '',
@@ -48,10 +49,10 @@ const add = () => {
 
         const book = await addBook(newBook);
         console.log(book);
+        refetch();
         setForm({ title: '', author: '', totalPages: '0' });
         ToastAndroid.show('Book added successfully', ToastAndroid.SHORT);
-
-        router.push('/home');
+        router.push('/(tabs)/home/reading');
       } catch (error) {
         ToastAndroid.show((error as Error).message, ToastAndroid.SHORT);
       } finally {

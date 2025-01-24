@@ -146,3 +146,20 @@ export async function addBook(form: BookForm): Promise<any> {
     throw new Error(String(error));
   }
 }
+
+export async function getAllBooks() {
+  try {
+    const books = await databases.listDocuments(
+      config.databaseId,
+      config.bookCollectionId
+    );
+
+    return books.documents;
+  } catch (error) {
+    console.log(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error(String(error));
+  }
+}
