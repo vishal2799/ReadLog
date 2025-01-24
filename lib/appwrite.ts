@@ -11,6 +11,7 @@ const config = {
   databaseId: '67921b93003849f89ac7',
   userCollectionId: '67921bcd003c325e2d0f',
   bookCollectionId: '67924126000437059383',
+  logCollectionId: '6793aa7b0013d0c805ac',
 };
 
 const client = new Client()
@@ -155,6 +156,69 @@ export async function getAllBooks() {
     );
 
     return books.documents;
+  } catch (error) {
+    console.log(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error(String(error));
+  }
+}
+
+export async function updateBookStatus(bookId:string): Promise<any> {
+  try {
+    const newStatus = await databases.updateDocument(
+      config.databaseId,
+      config.bookCollectionId,
+      bookId,
+      {
+        status: 'Reading'
+      }
+    );
+    return newStatus;
+  } catch (error) {
+    console.log(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error(String(error));
+  }
+}
+
+interface LogForm {
+  pages_read: number;
+  body: string;
+  bookId: string | undefined;
+  userId: string;
+}
+
+export async function addLog(form: LogForm): Promise<any> {
+  try {
+    const newLog = await databases.createDocument(
+      config.databaseId,
+      config.logCollectionId,
+      ID.unique(),
+      form
+    );
+    return newLog;
+  } catch (error) {
+    console.log(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error(String(error));
+  }
+}
+
+export async function getAllLogs(bookId:string) {
+  try {
+    const logs = await databases.listDocuments(
+      config.databaseId,
+      config.logCollectionId,
+      [Query.equal("bookId", bookId)]
+    );
+    console.log('length',logs.documents.length)
+    return logs.documents;
   } catch (error) {
     console.log(error);
     if (error instanceof Error) {
