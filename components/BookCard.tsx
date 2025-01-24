@@ -3,14 +3,29 @@ import React from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { Link } from 'expo-router'
 
-const BookCard = ({containerStyles, variant}) => {
-    const bookStatus = (variant) => {
+interface BookCardProps {
+    containerStyles?: string;
+    variant?: string;
+    data?: object;
+}
+
+const BookCard:React.FC<BookCardProps> = ({containerStyles, variant = 'Reading', data}) => {
+    const bookStatus = (variant:string) => {
         if(variant === 'Reading'){
-          return <Text className='font-pmedium text-sm text-secondary'>50% complete</Text>
+          return <Text className='font-psemibold text-sm text-secondary'>50% complete</Text>
         } else if(variant === 'ToRead') {
-           return <Text className='font-pmedium text-sm text-secondary'>To Read</Text>
+           return (
+            <View className='flex-row justify-center items-center gap-1'>
+                        <Ionicons name="time-outline" size={16} color='#FF6F61' />
+           <Text className='font-psemibold text-sm text-secondary'>To Read</Text>
+           </View>
+           )
         } else {
-           return <Text className='font-pmedium text-sm text-secondary'>Finished</Text>
+           return (
+            <View className='flex-row justify-center items-center gap-1'>
+                        <Ionicons name="book" size={16} color='#FF6F61' />
+           <Text className='font-psemibold text-sm text-secondary'>Finished</Text>
+        </View>)
         }
     }
   return (
@@ -22,7 +37,7 @@ const BookCard = ({containerStyles, variant}) => {
                     <Text className='text-black text-base font-pregular mt-2'>F. Scott Fitzgerald</Text>
                     <View className='flex flex-row justify-between items-center mt-4'>
                         <View className='flex-row justify-center items-center gap-2'>
-                        <Ionicons name="book" size={18} />
+                        <Ionicons name="book-outline" size={18} />
                         <Text className='text-sm font-pregular'>180 pages</Text>
                         </View>
                         {bookStatus(variant)}
