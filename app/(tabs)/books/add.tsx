@@ -5,20 +5,22 @@ import {
   Image,
   ToastAndroid,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '@/constants';
 import FormField from '@/components/FormField';
 import { Picker } from '@react-native-picker/picker';
 import CustomButton from '@/components/CustomButton';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { addBook } from '@/lib/appwrite';
 import { useBooks } from '@/context/BooksContext';
 
 const add = () => {
+  const {bookId} = useLocalSearchParams();
+  const isEditing = !!bookId;
   const { user } = useGlobalContext();
-  const { refetch } = useBooks();
+  const {books, refetch } = useBooks();
   const [form, setForm] = useState({
     title: '',
     author: '',
@@ -28,6 +30,20 @@ const add = () => {
   const [selectedLanguage, setSelectedLanguage] = useState();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (isEditing) {
+      const book:any = books?.find((b) => b.$id === bookId); // Find the book by ID
+      if (book) {
+        setForm({
+          title: book.title || '',
+          author: book.author || '',
+          totalPages: book.total_pages ? String(book.total_pages) : '0',
+        });
+        setSelectedLanguage(book.genre || '');
+      }
+    }
+  }, [bookId, books]);
 
   const submit = async () => {
     if (form.title === '' || form.author === '' || form.totalPages === '') {

@@ -1,6 +1,6 @@
-import { View, Text, ActivityIndicator, FlatList } from 'react-native'
+import { View, Text, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { router, useLocalSearchParams } from 'expo-router'
+import { Link, router, useLocalSearchParams } from 'expo-router'
 import { useBooks } from '@/context/BooksContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -48,17 +48,24 @@ const BookDetails = () => {
       ListHeaderComponent={() => (
         <View className='w-full'>
           <View className='w-full flex-row justify-between bg-white p-5 shadow-md'>
+            <TouchableOpacity onPress={() => router.navigate('/(tabs)/home/reading')}>
             <View className='flex-row justify-center items-center gap-3'>
               <Ionicons name='arrow-back' size={24} color='#000' />
               <Text className='font-pmedium text-xl'>{book?.title}</Text>
             </View>
+            </TouchableOpacity>
+            <Link href={{ pathname: `/(tabs)/add`, params: { bookId: `${book?.$id}` } }}>
             <Ionicons name='create-outline' size={24} color='#000' />
+            </Link>
           </View>
           <View className='w-full px-4 my-4'>
           <BookCard data={book} variant='Reading' location='detail' containerStyles='bg-white' />
           <CustomButton
             title='Add New Log'
-            handlePress={() => router.push('/(tabs)/log')}
+            handlePress={() => {
+              router.dismissTo('/');
+              router.push('/(tabs)/log')}
+            }
             containerStyles='w-full mt-5'
           />
           <Text className='mt-5 text-2xl text-black font-psemibold'>Reading Logs</Text>
