@@ -37,7 +37,7 @@ const SignIn = () => {
         setUser(result);
         setIsLogged(true);
         ToastAndroid.show('User signed in successfully', ToastAndroid.SHORT);
-        router.replace('/home');
+        router.replace('/(tabs)/home/reading');
       } catch (error) {
         ToastAndroid.show((error as Error).message, ToastAndroid.SHORT);
       } finally {

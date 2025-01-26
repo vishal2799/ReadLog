@@ -24,7 +24,7 @@ const ToRead = () => {
     <ScrollView>
         <View className='h-full w-full justify-center items-center px-4 my-3'>
             {readingBooks?.map((el:any) => (
-                <BookCard key={el} variant='ToRead' containerStyles='mb-5' data={el} />
+                <BookCard key={el?.$id} variant='ToRead' containerStyles='mb-5' data={el} />
             ))}
         </View>
     </ScrollView>
