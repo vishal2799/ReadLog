@@ -3,8 +3,6 @@ import {
   Text,
   ScrollView,
   Image,
-  TextInput,
-  Alert,
   ToastAndroid,
 } from 'react-native';
 import React, { useState } from 'react';
@@ -16,7 +14,6 @@ import CustomButton from '@/components/CustomButton';
 import { router } from 'expo-router';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { addBook } from '@/lib/appwrite';
-import { StatusBar } from 'expo-status-bar';
 import { useBooks } from '@/context/BooksContext';
 
 const add = () => {

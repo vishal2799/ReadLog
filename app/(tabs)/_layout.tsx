@@ -14,8 +14,11 @@ interface TabIconProps {
 }
 
 const TabIcon: FC<TabIconProps> = ({ icon, color, name, focused }) => {
+  if(name === 'Details') {
+    return null;
+  }
   return (
-    <View className="flex w-14 items-center justify-center gap-2">
+    <View className="flex w-16 items-center justify-center gap-2">
       <Ionicons name={icon as keyof typeof Ionicons.glyphMap} size={24} color={`${focused ? '#FF6F61' : '#4A4A4A'}`} />
       <Text
         className={`${focused ? "font-psemibold" : "font-pregular"} text-xs`}
@@ -60,7 +63,7 @@ const TabLayout = () => {
               />
             ),
           }}/>
-        <Tabs.Screen name='add' options={{
+        <Tabs.Screen name='books' options={{
             title: "Add",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (

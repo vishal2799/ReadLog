@@ -5,8 +5,6 @@ import {
   } from "@react-navigation/material-top-tabs";
   import { withLayoutContext } from "expo-router";
   import { ParamListBase, TabNavigationState, useFocusEffect } from "@react-navigation/native";
-import { useBooks } from "@/context/BooksContext";
-import { useCallback, useEffect, useState } from "react";
   
   const { Navigator } = createMaterialTopTabNavigator();
   

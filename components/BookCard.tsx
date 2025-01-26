@@ -10,9 +10,14 @@ interface BookCardProps {
 }
 
 const BookCard:React.FC<BookCardProps> = ({containerStyles, variant = 'Reading', data}) => {
+    const progressPercentage = (progressPercentage:any) => Math.min(
+        Math.ceil(( progressPercentage/ data.total_pages) * 100),
+        100
+      );
+
     const bookStatus = (variant:string) => {
         if(variant === 'Reading'){
-          return <Text className='font-psemibold text-sm text-secondary'>50% complete</Text>
+          return <Text className='font-psemibold text-sm text-secondary'>{data.progressPercentage}% complete</Text>
         } else if(variant === 'ToRead') {
            return (
             <View className='flex-row justify-center items-center gap-1'>
@@ -43,9 +48,12 @@ const BookCard:React.FC<BookCardProps> = ({containerStyles, variant = 'Reading',
                         {bookStatus(variant)}
                     </View>
                     {variant === 'Reading' && (<View className='w-full h-1 bg-gray-200 rounded-sm mt-3'>
-                        <View className='h-full bg-secondary' style={{width: '50%'}}></View>
+                        <View className='h-full bg-secondary' style={{width: progressPercentage(data.progressPercentage)}}></View>
                     </View>)}
-                    <Link href={'/add'} className='mt-3'>
+                    <Link href={{
+          pathname: '/(tabs)/books/[detail]',
+          params: { detail: `${data?.$id}` },
+        }} className='mt-3'>
                     <View className='w-full flex-row justify-end items-center gap-1'>
                     <Text className='text-sm font-psemibold text-secondary'>Book Details</Text>
                     <Ionicons name="chevron-forward" size={18} color='#FF6F61'/>
