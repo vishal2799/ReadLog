@@ -1,11 +1,12 @@
 import { View, Text, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useRef } from 'react'
 import { Link, router, useLocalSearchParams } from 'expo-router'
 import { useBooks } from '@/context/BooksContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import BookCard from '@/components/BookCard';
 import CustomButton from '@/components/CustomButton';
+import LottieView from 'lottie-react-native';
 
 const LogCard = ({log}: any) => {
   return (
@@ -24,6 +25,7 @@ const LogCard = ({log}: any) => {
 const BookDetails = () => {
   const {detail} = useLocalSearchParams();
   const { books, loading } = useBooks();
+  const animation = useRef<LottieView>(null);
 
    if (loading) {
         return <ActivityIndicator animating={loading} color="#000" size='large' />
@@ -53,7 +55,7 @@ const BookDetails = () => {
               {/* <Text className='font-pmedium text-xl'>{book?.title}</Text> */}
             </TouchableOpacity>
             <Text className='font-pmedium text-xl'>Book Details</Text>
-            <Link href={{ pathname: '/(tabs)/books/add'}}>
+            <Link href={{ pathname: '/(tabs)/add'}}>
             <Ionicons name='create-outline' size={24} color='#000' />
             </Link>
           </View>
@@ -61,7 +63,7 @@ const BookDetails = () => {
           <BookCard data={book} variant='Reading' location='detail' containerStyles='bg-white' />
           <CustomButton
             title='Add New Log'
-            handlePress={() => router.navigate('/(tabs)/add')}
+            handlePress={() => router.navigate('/(tabs)/log')}
             containerStyles='w-full mt-5'
           />
           <Text className='mt-5 text-2xl text-black font-psemibold'>Reading Logs</Text>
@@ -69,7 +71,20 @@ const BookDetails = () => {
         </View>
       )}
       ListEmptyComponent={() => (
-        <View><Text>No Logs Found!</Text></View>
+        <View className='w-full justify-center items-center px-3 my-3'>
+          <LottieView
+                                autoPlay
+                                ref={animation}
+                                style={{
+                                  width: 200,
+                                  height: 200,
+                                  backgroundColor: 'transparent',
+                                }}
+                                // Find more Lottie files at https://lottiefiles.com/featured
+                                source={require('@/assets/reading.json')}
+                              />
+                              <Text className='text-center text-lg font-pregular mt-4'>No progress logged yet. Start tracking your reading journey today.</Text>
+        </View>
       )}
       />
     </SafeAreaView>

@@ -1,10 +1,12 @@
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native'
-import React from 'react'
+import React, { useRef } from 'react'
 import BookCard from '@/components/BookCard'
 import { useBooks } from '@/context/BooksContext';
+import LottieView from 'lottie-react-native';
 
 const finished = () => {
   const { books, loading } = useBooks();
+  const animation = useRef<LottieView>(null);
   
     if (loading) {
       return <ActivityIndicator animating={loading} color="#000" size='large' />
@@ -14,8 +16,19 @@ const finished = () => {
   
     if (readingBooks.length === 0) {
       return (
-        <View>
-          <Text>No books are currently being read. 📚</Text>
+        <View className='h-full w-full justify-center items-center px-3 my-3'>
+          <LottieView
+        autoPlay
+        ref={animation}
+        style={{
+          width: 200,
+          height: 200,
+          backgroundColor: 'transparent',
+        }}
+        // Find more Lottie files at https://lottiefiles.com/featured
+        source={require('@/assets/bookshelf.json')}
+      />
+          <Text className='text-center text-lg font-pregular mt-4'>No books finished yet. Keep reading and mark them as completed when you're done! 📚</Text>
         </View>
       );
     }
