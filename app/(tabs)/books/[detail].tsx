@@ -47,13 +47,12 @@ const BookDetails = () => {
       )}
       ListHeaderComponent={() => (
         <View className='w-full'>
-          <View className='w-full flex-row justify-between bg-white p-5 shadow-md'>
-            <TouchableOpacity onPress={() => router.navigate('/(tabs)/home/reading')}>
-            <View className='flex-row justify-center items-center gap-3'>
-              <Ionicons name='arrow-back' size={24} color='#000' />
-              <Text className='font-pmedium text-xl'>{book?.title}</Text>
-            </View>
+          <View className='w-full flex-row justify-between items-center bg-white p-5 shadow-md'>
+            <TouchableOpacity className='flex-row justify-center items-center' onPress={() => router.back()}>
+               <Ionicons name='arrow-back' size={24} color='#000' />
+              {/* <Text className='font-pmedium text-xl'>{book?.title}</Text> */}
             </TouchableOpacity>
+            <Text className='font-pmedium text-xl'>Book Details</Text>
             <Link href={{ pathname: '/(tabs)/books/add'}}>
             <Ionicons name='create-outline' size={24} color='#000' />
             </Link>
@@ -62,10 +61,7 @@ const BookDetails = () => {
           <BookCard data={book} variant='Reading' location='detail' containerStyles='bg-white' />
           <CustomButton
             title='Add New Log'
-            handlePress={() => {
-              router.dismissTo('/');
-              router.push('/(tabs)/log')}
-            }
+            handlePress={() => router.navigate('/(tabs)/add')}
             containerStyles='w-full mt-5'
           />
           <Text className='mt-5 text-2xl text-black font-psemibold'>Reading Logs</Text>

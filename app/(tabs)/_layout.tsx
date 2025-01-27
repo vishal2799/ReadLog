@@ -63,7 +63,7 @@ const TabLayout = () => {
               />
             ),
           }}/>
-        <Tabs.Screen name='books' options={{
+        <Tabs.Screen name='add' options={{
             title: "Add",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
@@ -107,6 +107,19 @@ const TabLayout = () => {
                 icon='person-outline'
                 color={color}
                 name="Profile"
+                focused={focused}
+              />
+            ),
+          }}/>
+          <Tabs.Screen name='books' options={{
+            href: null,
+            title: "Books",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon='add-circle-outline'
+                color={color}
+                name="Books"
                 focused={focused}
               />
             ),

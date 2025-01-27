@@ -6,7 +6,6 @@ const BookLayout = () => {
   
   return (
     <Stack>
-        <Stack.Screen name='add' options={{headerShown: false}} />
         <Stack.Screen name='[detail]' options={{headerShown: false}} />
     </Stack>
   )
