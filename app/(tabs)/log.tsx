@@ -7,7 +7,7 @@ import { Picker } from '@react-native-picker/picker';
 import CustomButton from '@/components/CustomButton';
 import { router } from 'expo-router';
 import { useGlobalContext } from '@/context/GlobalProvider';
-import { addBook, addLog, getAllLogs, updateBookStatus } from '@/lib/appwrite';
+import { addLog, getAllLogs, updateBookStatus } from '@/lib/appwrite';
 import { useBooks } from '@/context/BooksContext';
 
 const Log = () => {

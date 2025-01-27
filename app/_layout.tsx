@@ -3,6 +3,7 @@ import "../global.css";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import GlobalProvider from "@/context/GlobalProvider";
+import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -43,7 +44,7 @@ export default function RootLayout() {
       }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-    </Stack>
+    </Stack>  
     </GlobalProvider>
   );
 }
