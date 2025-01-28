@@ -1,22 +1,40 @@
-import { View, Text, ToastAndroid, ScrollView, ActivityIndicator } from 'react-native';
-import React from 'react';
+import { View, Text, ToastAndroid, ScrollView, ActivityIndicator, StyleSheet } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useGlobalContext } from '../../context/GlobalProvider';
 import { signOut } from '@/lib/appwrite';
 import { router } from 'expo-router';
-import CustomButton from '@/components/CustomButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useBooks } from '@/context/BooksContext';
+import LottieView from 'lottie-react-native';
+import GenreChart from '@/components/GenreChart';
+import ReadingBarChart from '@/components/ReadingBarChart';
+import { AntDesign } from '@expo/vector-icons';
 
 const Home = () => {
     const { books, loading } = useBooks();
-
+  const animation = useRef<LottieView>(null);
     if (loading) {
           return <ActivityIndicator animating={loading} color="#000" size='large' />
     }
 
     if (!books || books.length === 0) {
-      return <div>No books found!</div>;
+      return (
+        <View className='h-full w-full justify-center items-center px-3 my-3'>
+                  <LottieView
+                autoPlay
+                ref={animation}
+                style={{
+                  width: 200,
+                  height: 200,
+                  backgroundColor: 'transparent',
+                }}
+                // Find more Lottie files at https://lottiefiles.com/featured
+                source={require('@/assets/bookshelf.json')}
+              />
+                  <Text className='text-center text-lg font-pregular mt-4'>No books found! 📚</Text>
+                </View>
+      );
     }
 
     // Calculate KPIs
@@ -44,15 +62,15 @@ const Home = () => {
 
 
   
-  const { user, setUser, setIsLogged } = useGlobalContext();
+  // const { user, setUser, setIsLogged } = useGlobalContext();
 
-  const logout = async () => {
-    await signOut();
-    setUser(null);
-    setIsLogged(false);
-    ToastAndroid.show('Logout Successfully', ToastAndroid.SHORT);
-    router.replace('/sign-in');
-  };
+  // const logout = async () => {
+  //   await signOut();
+  //   setUser(null);
+  //   setIsLogged(false);
+  //   ToastAndroid.show('Logout Successfully', ToastAndroid.SHORT);
+  //   router.replace('/sign-in');
+  // };
 
   return (
     <SafeAreaView className='bg-primary h-full'>
@@ -70,9 +88,9 @@ const Home = () => {
 
                 <View className="w-full flex-row justify-center my-6 flex-wrap gap-x-4 gap-y-4">
   {/* Column 1 */}
-  <View className="bg-white px-3 py-3 flex-row justify-between items-center rounded-md gap-3 w-[45%]">
-    <View className="flex-col justify-center items-center w-10 h-10 bg-green-100 rounded-full">
-      <Ionicons name="book-outline" size={16} color="green" />
+  <View className="bg-white px-3 py-3 flex-row items-center rounded-md gap-3 w-[45%]">
+    <View className="flex-col justify-center items-center w-10 h-10 bg-blue-100 rounded-full">
+      <AntDesign name="book" size={16} color="blue" />
     </View>
     <View className="flex-col">
       <Text className="text-lg font-pbold">{booksRead}</Text>
@@ -81,7 +99,7 @@ const Home = () => {
   </View>
 
   {/* Column 2 */}
-  <View className="bg-white px-3 py-3 flex-row justify-between items-center rounded-md gap-3 w-[45%]">
+  <View className="bg-white px-3 py-3 flex-row gap-3 items-center rounded-md w-[45%]">
     <View className="flex-col justify-center items-center w-10 h-10 bg-green-100 rounded-full">
       <Ionicons name="book-outline" size={16} color="green" />
     </View>
@@ -92,9 +110,9 @@ const Home = () => {
   </View>
 
   {/* Column 3 */}
-  <View className="bg-white px-3 py-3 flex-row justify-between items-center rounded-md gap-3 w-[45%]">
-    <View className="flex-col justify-center items-center w-10 h-10 bg-green-100 rounded-full">
-      <Ionicons name="book-outline" size={16} color="green" />
+  <View className="bg-white px-3 py-3 flex-row gap-3 items-center rounded-md w-[45%]">
+    <View className="flex-col justify-center items-center w-10 h-10 bg-red-100 rounded-full">
+      <Ionicons name="analytics" size={16} color="red" />
     </View>
     <View className="flex-col">
       <Text className="text-lg font-pbold">{totalPagesRead}</Text>
@@ -103,9 +121,9 @@ const Home = () => {
   </View>
 
   {/* Column 4 */}
-  <View className="bg-white px-3 py-3 flex-row justify-between items-center rounded-md gap-3 w-[45%]">
-    <View className="flex-col justify-center items-center w-10 h-10 bg-green-100 rounded-full">
-      <Ionicons name="book-outline" size={16} color="green" />
+  <View className="bg-white px-3 py-3 flex-row gap-3 items-center rounded-md w-[45%]">
+    <View className="flex-col justify-center items-center w-10 h-10 bg-indigo-100 rounded-full">
+      <Ionicons name="stats-chart" size={16} color="indigo" />
     </View>
     <View className="flex-col">
       <Text className="text-lg font-pbold">{avgPagesPerDay.toFixed(1)}</Text>
@@ -113,7 +131,8 @@ const Home = () => {
     </View>
   </View>
 </View>
-
+<ReadingBarChart />
+<GenreChart />
 
               </View>
               </ScrollView>

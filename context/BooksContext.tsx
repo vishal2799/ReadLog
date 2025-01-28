@@ -12,6 +12,7 @@ interface Book {
   $id: string;
   title: string;
   status: string; // "reading", "to-read", "finished"
+  genre: string;
   total_pages: number;
   progressPercentage?: string; // Dynamically added progress
   logs?: Log[]; // Logs associated with the book

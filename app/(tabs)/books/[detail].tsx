@@ -15,6 +15,7 @@ const LogCard = ({log}: any) => {
         <Text className='text-lg font-bold'>2023-06-15</Text>
         <Text className='py-2 px-3 rounded-full font-psemibold text-sm bg-red-50 text-secondary'>{log?.pages_read} pages</Text>
       </View>
+      <Text className='text-base text-black-100'>{log?.$createdAt}</Text>
       {log?.body !== '' && (
         <Text className='text-base font-pregular text-black-100 mt-3'>{log?.body}</Text>
       )}
