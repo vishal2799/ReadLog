@@ -51,7 +51,7 @@ const Log = () => {
         const isFirstLog = logs.length === 0;
 
         if (isFirstLog) {
-          const newStatus = await updateBookStatus(selectedBook);
+          const newStatus = await updateBookStatus(selectedBook, 'Reading');
           const log = await addLog(newLog);
           console.log(log);
           refetch();

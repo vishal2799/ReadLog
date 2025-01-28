@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { getAllBooks, getAllLogs } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
+import { useGlobalContext } from "./GlobalProvider";
 
 interface Log {
   pages_read: number;
@@ -25,7 +26,9 @@ interface BooksContextType {
 const BooksContext = createContext<BooksContextType | undefined>(undefined);
 
 export const BooksProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { data: books, loading: booksLoading, refetch: refetchBooks } = useAppwrite(getAllBooks);
+  const { user } = useGlobalContext();
+
+  const { data: books, loading: booksLoading, refetch: refetchBooks } = useAppwrite(() => getAllBooks(user?.$id));
   const [booksWithDetails, setBooksWithDetails] = useState<Book[] | null>(null);
   const [loading, setLoading] = useState(true);
 

@@ -148,11 +148,12 @@ export async function addBook(form: BookForm): Promise<any> {
   }
 }
 
-export async function getAllBooks() {
+export async function getAllBooks(userId: string) {
   try {
     const books = await databases.listDocuments(
       config.databaseId,
-      config.bookCollectionId
+      config.bookCollectionId,
+      [Query.equal("user_id", userId)]
     );
 
     return books.documents;
@@ -165,14 +166,14 @@ export async function getAllBooks() {
   }
 }
 
-export async function updateBookStatus(bookId:string): Promise<any> {
+export async function updateBookStatus(bookId:string, status: string): Promise<any> {
   try {
     const newStatus = await databases.updateDocument(
       config.databaseId,
       config.bookCollectionId,
       bookId,
       {
-        status: 'Reading'
+        status: status
       }
     );
     return newStatus;
