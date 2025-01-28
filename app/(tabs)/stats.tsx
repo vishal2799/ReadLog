@@ -1,9 +1,6 @@
-import { View, Text, ToastAndroid, ScrollView, ActivityIndicator, StyleSheet } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
+import React, { useRef} from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useGlobalContext } from '../../context/GlobalProvider';
-import { signOut } from '@/lib/appwrite';
-import { router } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useBooks } from '@/context/BooksContext';
 import LottieView from 'lottie-react-native';
@@ -77,7 +74,7 @@ const Home = () => {
       <ScrollView>
               <View className='h-full w-full justify-center items-center mb-10'>
                 <View className='w-full bg-white p-5'>
-                  <Text className='text-black text-3xl font-pbold text-center mt-5'>
+                  <Text className='text-black text-3xl font-pbold text-center'>
                   Your Reading Stats
                               </Text>
                               <Text className='text-black-200 font-plight text-lg mt-4 text-center'>
@@ -88,7 +85,7 @@ const Home = () => {
 
                 <View className="w-full flex-row justify-center my-6 flex-wrap gap-x-4 gap-y-4">
   {/* Column 1 */}
-  <View className="bg-white px-3 py-3 flex-row items-center rounded-md gap-3 w-[45%]">
+  <View className="bg-white px-3 py-3 flex-row shadow-md shadow-slate-400 items-center rounded-md gap-3 w-[45%]">
     <View className="flex-col justify-center items-center w-10 h-10 bg-blue-100 rounded-full">
       <AntDesign name="book" size={16} color="blue" />
     </View>
@@ -99,7 +96,7 @@ const Home = () => {
   </View>
 
   {/* Column 2 */}
-  <View className="bg-white px-3 py-3 flex-row gap-3 items-center rounded-md w-[45%]">
+  <View className="bg-white px-3 py-3 flex-row gap-3 shadow-md shadow-slate-400 items-center rounded-md w-[45%]">
     <View className="flex-col justify-center items-center w-10 h-10 bg-green-100 rounded-full">
       <Ionicons name="book-outline" size={16} color="green" />
     </View>
@@ -110,7 +107,7 @@ const Home = () => {
   </View>
 
   {/* Column 3 */}
-  <View className="bg-white px-3 py-3 flex-row gap-3 items-center rounded-md w-[45%]">
+  <View className="bg-white px-3 py-3 flex-row gap-3 shadow-md shadow-slate-400 items-center rounded-md w-[45%]">
     <View className="flex-col justify-center items-center w-10 h-10 bg-red-100 rounded-full">
       <Ionicons name="analytics" size={16} color="red" />
     </View>
@@ -121,7 +118,7 @@ const Home = () => {
   </View>
 
   {/* Column 4 */}
-  <View className="bg-white px-3 py-3 flex-row gap-3 items-center rounded-md w-[45%]">
+  <View className="bg-white px-3 py-3 flex-row gap-3 shadow-md shadow-slate-400 items-center rounded-md w-[45%]">
     <View className="flex-col justify-center items-center w-10 h-10 bg-indigo-100 rounded-full">
       <Ionicons name="stats-chart" size={16} color="indigo" />
     </View>

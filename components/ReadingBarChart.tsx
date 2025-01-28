@@ -48,7 +48,7 @@ const ReadingBarChart = () => {
 
   return (
     <View className='mx-3 mb-4 flex-row'>
-          <View className='w-full bg-white rounded-md p-5'>
+          <View className='w-full bg-white rounded-md p-5 shadow-md shadow-slate-500'>
             <Text className='text-xl font-psemibold mb-4'>Reading Progress</Text>
             <View className='w-full flex-row justify-center'>
             <BarChart
