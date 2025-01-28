@@ -73,7 +73,7 @@ const Home = () => {
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView>
               <View className='h-full w-full justify-center items-center mb-10'>
-                <View className='w-full bg-white p-5'>
+                <View className='w-full bg-white p-5 shadow-md shadow-slate-400'>
                   <Text className='text-black text-3xl font-pbold text-center'>
                   Your Reading Stats
                               </Text>
