@@ -35,7 +35,7 @@ const BookCard:React.FC<BookCardProps> = ({containerStyles, variant = 'Reading',
         }
     }
   return (
-    <View className={`w-full bg-primary rounded-lg p-5 shadow-md shadow-slate-500 ${containerStyles}`}>
+    <View className={`w-full bg-white rounded-lg p-5 shadow-md shadow-slate-500 ${containerStyles}`}>
                     <View className='flex flex-row justify-between items-center'>
                         <Text className='text-xl font-psemibold text-secondary'>{data?.title}</Text>
                         <Text className='py-2 px-3 rounded-full font-psemibold text-sm bg-red-50 text-secondary'>{data?.genre}</Text>
