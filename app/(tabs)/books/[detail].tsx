@@ -1,23 +1,27 @@
-import { View, Text, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, ActivityIndicator, FlatList, TouchableOpacity, Alert } from 'react-native'
 import React, { useRef } from 'react'
 import { Link, router, useLocalSearchParams } from 'expo-router'
 import { useBooks } from '@/context/BooksContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import BookCard from '@/components/BookCard';
 import CustomButton from '@/components/CustomButton';
 import LottieView from 'lottie-react-native';
 import dayjs from "dayjs"; 
+import { deleteLog, updateBookStatus } from '@/lib/appwrite';
 
-const LogCard = ({log}: any) => {
+const LogCard = ({log, handlePress}: any) => {
   return (
     <View className='bg-white shadow-md rounded-md p-4 mx-4 my-3'>
       <View className='flex-row w-full justify-between items-center'>
         <Text className='text-lg font-bold'>{dayjs(log?.$createdAt).format('YYYY-MM-DD')}</Text>
         <Text className='py-2 px-3 rounded-full font-psemibold text-sm bg-red-50 text-secondary'>{log?.pages_read} pages</Text>
+        <TouchableOpacity onPress={() => handlePress(log)}>
+        <AntDesign name='delete' size={16} color='#000' />
+        </TouchableOpacity>
       </View>
       {log?.body !== '' && (
-        <Text className='text-base font-pregular text-black-100 mt-3'>{log?.body}</Text>
+        <Text className='text-base font-pregular text-black-100 mt-4'>{log?.body}</Text>
       )}
     </View>
   )
@@ -25,7 +29,7 @@ const LogCard = ({log}: any) => {
 
 const BookDetails = () => {
   const {detail} = useLocalSearchParams();
-  const { books, loading } = useBooks();
+  const { books, loading, refetch } = useBooks();
   const animation = useRef<LottieView>(null);
 
    if (loading) {
@@ -38,6 +42,35 @@ const BookDetails = () => {
     return <Text>Book not found</Text>;
   }
 
+  const handleDeleteLog = async (log: any) => {
+    const isFirstLog = book?.logs?.length === 1;
+    const totalPagesRead = (book?.logs?.reduce((sum, log) => sum + log.pages_read, 0) || 0) - (log?.pages_read || 0);
+
+    Alert.alert(
+      "Delete Log",
+      "Are you sure you want to delete this log? This action cannot be undone.",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          onPress: async () => {
+            if (book && book?.status === 'Finished' && (totalPagesRead <= book.total_pages)) {
+              await updateBookStatus(book?.$id, 'Reading');
+            }
+        
+            if (book && book?.status === 'Reading' && isFirstLog) {
+              await updateBookStatus(book?.$id, 'ToRead');
+            }
+            await deleteLog(log?.$id);
+            refetch();
+          },
+          style: "destructive",
+        },
+      ]
+    );
+  };
+  
+
   return (
     <SafeAreaView className='bg-primary h-full'>
       <FlatList
@@ -46,6 +79,7 @@ const BookDetails = () => {
       renderItem={({ item }) => (
         <LogCard
           log={item}
+          handlePress={handleDeleteLog}
         />
       )}
       ListHeaderComponent={() => (

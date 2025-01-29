@@ -1,3 +1,4 @@
+import { ToastAndroid } from 'react-native';
 import {
   Client,
   Account,
@@ -222,6 +223,20 @@ export async function getAllLogs(bookId:string) {
     return logs.documents;
   } catch (error) {
     console.log(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error(String(error));
+  }
+}
+
+export async function deleteLog(logId: string): Promise<any> {
+  try {
+    await databases.deleteDocument(config.databaseId, config.logCollectionId, logId);
+    ToastAndroid.show("Log deleted successfully.", ToastAndroid.SHORT);
+  } catch (error) {
+    console.log(error);
+    ToastAndroid.show("Failed to delete log.", ToastAndroid.SHORT);
     if (error instanceof Error) {
       throw new Error(error.message);
     }
