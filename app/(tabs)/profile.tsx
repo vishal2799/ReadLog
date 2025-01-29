@@ -1,12 +1,22 @@
-import { View, Text, ScrollView, Image, Dimensions } from 'react-native';
+import { View, Text, ScrollView, Image, Dimensions, ToastAndroid } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import CustomButton from '@/components/CustomButton';
 import { signOut } from '@/lib/appwrite';
+import { router } from 'expo-router';
 
 const profile = () => {
-  const { user } = useGlobalContext();
+  const { user, setUser, setIsLogged } = useGlobalContext();
+
+  const logout = async () => {
+    await signOut();
+    setUser(null);
+    setIsLogged(false);
+    ToastAndroid.show('Logout Successfully', ToastAndroid.SHORT);
+    router.replace('/sign-in');
+  };
+
 
   return (
     <SafeAreaView className='bg-primary h-full'>
@@ -28,7 +38,7 @@ const profile = () => {
               <Text className='w- text-lg text-black-200 font-pmedium mt-4'>Happy Reading!</Text>
               <CustomButton
             title='Logout'
-            handlePress={() => signOut()}
+            handlePress={logout}
             containerStyles='w-4/5 mt-7'
           />
           </View>

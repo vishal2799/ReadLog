@@ -7,15 +7,15 @@ import { Ionicons } from '@expo/vector-icons';
 import BookCard from '@/components/BookCard';
 import CustomButton from '@/components/CustomButton';
 import LottieView from 'lottie-react-native';
+import dayjs from "dayjs"; 
 
 const LogCard = ({log}: any) => {
   return (
     <View className='bg-white shadow-md rounded-md p-4 mx-4 my-3'>
       <View className='flex-row w-full justify-between items-center'>
-        <Text className='text-lg font-bold'>2023-06-15</Text>
+        <Text className='text-lg font-bold'>{dayjs(log?.$createdAt).format('YYYY-MM-DD')}</Text>
         <Text className='py-2 px-3 rounded-full font-psemibold text-sm bg-red-50 text-secondary'>{log?.pages_read} pages</Text>
       </View>
-      <Text className='text-base text-black-100'>{log?.$createdAt}</Text>
       {log?.body !== '' && (
         <Text className='text-base font-pregular text-black-100 mt-3'>{log?.body}</Text>
       )}
