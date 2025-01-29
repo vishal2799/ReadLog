@@ -49,29 +49,46 @@ const Log = () => {
         }
         const logs = await getAllLogs(selectedBook);
         const isFirstLog = logs.length === 0;
+        const totalPagesRead = logs.reduce((sum, log) => sum + log.pages_read, 0) + newLog.pages_read;
 
         if (isFirstLog) {
-          const newStatus = await updateBookStatus(selectedBook, 'Reading');
-          const log = await addLog(newLog);
-          console.log(log);
-          refetch();
-          setForm({ notes: '', totalPages: '0' });
-          ToastAndroid.show(
-            'Your progress has been logged.',
-            ToastAndroid.SHORT
-          );
-          router.push('/(tabs)/home/reading');
-        } else {
-          const log = await addLog(newLog);
-          console.log(log);
-          refetch();
-          setForm({ notes: '', totalPages: '0' });
-          ToastAndroid.show(
-            'Your progress has been logged.',
-            ToastAndroid.SHORT
-          );
-          router.push('/(tabs)/home/reading');
+          await updateBookStatus(selectedBook, 'Reading');
         }
+  
+        const selectedBookDetails = books?.find((b) => b.$id === selectedBook);
+        if (selectedBookDetails && totalPagesRead >= selectedBookDetails.total_pages) {
+          await updateBookStatus(selectedBook, 'Finished');
+        }
+  
+        const log = await addLog(newLog);
+        console.log(log);
+        refetch();
+        setForm({ notes: '', totalPages: '0' });
+        ToastAndroid.show('Your progress has been logged.', ToastAndroid.SHORT);
+        router.push('/(tabs)/home/reading');
+
+        // if (isFirstLog) {
+        //   const newStatus = await updateBookStatus(selectedBook, 'Reading');
+        //   const log = await addLog(newLog);
+        //   console.log(log);
+        //   refetch();
+        //   setForm({ notes: '', totalPages: '0' });
+        //   ToastAndroid.show(
+        //     'Your progress has been logged.',
+        //     ToastAndroid.SHORT
+        //   );
+        //   router.push('/(tabs)/home/reading');
+        // } else {
+        //   const log = await addLog(newLog);
+        //   console.log(log);
+        //   refetch();
+        //   setForm({ notes: '', totalPages: '0' });
+        //   ToastAndroid.show(
+        //     'Your progress has been logged.',
+        //     ToastAndroid.SHORT
+        //   );
+        //   router.push('/(tabs)/home/reading');
+        // }
       } catch (error) {
         ToastAndroid.show((error as Error).message, ToastAndroid.SHORT);
       } finally {

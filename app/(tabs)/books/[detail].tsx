@@ -61,12 +61,12 @@ const BookDetails = () => {
             </Link>
           </View>
           <View className='w-full px-4 my-4'>
-          <BookCard data={book} variant='Reading' location='detail' containerStyles='bg-white' />
-          <CustomButton
+          <BookCard data={book} variant={book.status} location='detail' containerStyles='bg-white' />
+          {book.status !== 'Finished' && <CustomButton
             title='Add New Log'
             handlePress={() => router.navigate('/(tabs)/log')}
             containerStyles='w-full mt-5'
-          />
+          />}
           <Text className='mt-5 text-2xl text-black font-psemibold'>Reading Logs</Text>
           </View>
         </View>
