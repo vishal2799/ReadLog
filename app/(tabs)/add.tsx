@@ -13,11 +13,11 @@ import { Picker } from '@react-native-picker/picker';
 import CustomButton from '@/components/CustomButton';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useGlobalContext } from '@/context/GlobalProvider';
-import { addBook } from '@/lib/appwrite';
+import { addBook, updateBook } from '@/lib/appwrite';
 import { useBooks } from '@/context/BooksContext';
 
 const add = () => {
-  const {bookId} = useLocalSearchParams();
+  const { bookId } = useLocalSearchParams() as { bookId: string };
   const isEditing = !!bookId;
   const { user } = useGlobalContext();
   const {books, refetch } = useBooks();
@@ -50,26 +50,48 @@ const add = () => {
       ToastAndroid.show('Please fill all the fields.', ToastAndroid.SHORT);
     } else {
       setIsSubmitting(true);
-      try {
-        const newBook = {
-          title: form.title,
-          author: form.author,
-          genre: selectedLanguage,
-          total_pages: Number(form.totalPages),
-          status: 'ToRead',
-          user_id: user.$id,
-        };
-
-        const book = await addBook(newBook);
-        console.log(book);
-        refetch();
-        setForm({ title: '', author: '', totalPages: '0' });
-        ToastAndroid.show('Book added successfully', ToastAndroid.SHORT);
-        router.push('/(tabs)/home/reading');
-      } catch (error) {
-        ToastAndroid.show((error as Error).message, ToastAndroid.SHORT);
-      } finally {
-        setIsSubmitting(false);
+      if(isEditing){
+        try {
+          const newBook = {
+            title: form.title,
+            author: form.author,
+            genre: selectedLanguage,
+            total_pages: Number(form.totalPages),
+          };
+  
+          const book = await updateBook(newBook, bookId);
+          console.log(book);
+          refetch();
+          setForm({ title: '', author: '', totalPages: '0' });
+          ToastAndroid.show('Book updated successfully', ToastAndroid.SHORT);
+          router.push('/(tabs)/home/reading');
+        } catch (error) {
+          ToastAndroid.show((error as Error).message, ToastAndroid.SHORT);
+        } finally {
+          setIsSubmitting(false);
+        }
+      } else {
+        try {
+          const newBook = {
+            title: form.title,
+            author: form.author,
+            genre: selectedLanguage,
+            total_pages: Number(form.totalPages),
+            status: 'ToRead',
+            user_id: user.$id,
+          };
+  
+          const book = await addBook(newBook);
+          console.log(book);
+          refetch();
+          setForm({ title: '', author: '', totalPages: '0' });
+          ToastAndroid.show('Book added successfully', ToastAndroid.SHORT);
+          router.push('/(tabs)/home/reading');
+        } catch (error) {
+          ToastAndroid.show((error as Error).message, ToastAndroid.SHORT);
+        } finally {
+          setIsSubmitting(false);
+        }
       }
     }
   };

@@ -92,7 +92,7 @@ const BookDetails = () => {
               {/* <Text className='font-pmedium text-xl'>{book?.title}</Text> */}
             </TouchableOpacity>
             <Text className='font-pmedium text-xl'>Book Details</Text>
-            <Link href={{ pathname: '/(tabs)/add'}}>
+            <Link href={{ pathname: '/(tabs)/add', params: {bookId: book?.$id}}}>
             <Ionicons name='create-outline' size={24} color='#000' />
             </Link>
           </View>

@@ -131,6 +131,13 @@ interface BookForm {
   user_id: string;
 }
 
+interface BookForm2 {
+  title: string;
+  author: string;
+  genre: string | undefined;
+  total_pages: number;
+}
+
 export async function addBook(form: BookForm): Promise<any> {
   try {
     const newBook = await databases.createDocument(
@@ -158,6 +165,24 @@ export async function getAllBooks(userId: string) {
     );
 
     return books.documents;
+  } catch (error) {
+    console.log(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error(String(error));
+  }
+}
+
+export async function updateBook(form: BookForm2, bookId: string): Promise<any> {
+  try {
+    const newBook = await databases.updateDocument(
+      config.databaseId,
+      config.bookCollectionId,
+      bookId,
+      form
+    );
+    return newBook;
   } catch (error) {
     console.log(error);
     if (error instanceof Error) {
