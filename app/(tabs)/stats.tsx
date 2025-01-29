@@ -60,8 +60,8 @@ const Home = () => {
   return (
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView>
-              <View className='h-full w-full justify-center items-center mb-10'>
-                <View className='w-full bg-white p-5 shadow-md shadow-slate-400'>
+              <View className='h-full w-full justify-center items-center my-6'>
+                <View className='w-full px-5'>
                   <Text className='text-black text-3xl font-pbold text-center'>
                   Your Reading Stats
                               </Text>
@@ -119,7 +119,7 @@ const Home = () => {
 <ReadingBarChart />
 <GenreChart />
 
-<View className='flex-row mx-4 mt-2'>
+<View className='flex-row mx-4 mt-2 mb-6'>
 <View className='w-full bg-secondary rounded-md p-5'>
   <Text className='text-white font-psemibold text-lg text-center'>Keep reading!</Text>
   <Text className='text-white font-pmedium text-sm text-center mt-2'>You're doing great! Every page is a new adventure.</Text>
