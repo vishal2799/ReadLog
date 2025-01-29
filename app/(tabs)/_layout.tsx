@@ -5,6 +5,7 @@ import { Text, View } from 'react-native';
 
 import { FC } from 'react';
 import { BooksProvider } from '@/context/BooksContext';
+import { StatusBar } from 'expo-status-bar';
 
 interface TabIconProps {
   icon: string;
@@ -125,6 +126,7 @@ const TabLayout = () => {
             ),
           }}/>
     </Tabs>
+    <StatusBar backgroundColor="#F8F9FA" style="dark" />
     </BooksProvider>
     </>
   )

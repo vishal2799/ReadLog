@@ -3,6 +3,7 @@ import React, { useRef } from 'react'
 import BookCard from '@/components/BookCard'
 import { useBooks } from '@/context/BooksContext';
 import LottieView from 'lottie-react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const finished = () => {
   const { books, loading } = useBooks();
