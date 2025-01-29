@@ -14,14 +14,16 @@ const LogCard = ({log, handlePress}: any) => {
   return (
     <View className='bg-white shadow-md rounded-md p-4 mx-4 my-3'>
       <View className='flex-row w-full justify-between items-center'>
+        <View className='flex-row gap-3 items-center'>
         <Text className='text-lg font-bold'>{dayjs(log?.$createdAt).format('YYYY-MM-DD')}</Text>
         <Text className='py-2 px-3 rounded-full font-psemibold text-sm bg-red-50 text-secondary'>{log?.pages_read} pages</Text>
+        </View>
         <TouchableOpacity onPress={() => handlePress(log)}>
-        <AntDesign name='delete' size={16} color='#000' />
+        <AntDesign name='delete' size={18} color='#8A8A8A' />
         </TouchableOpacity>
       </View>
       {log?.body !== '' && (
-        <Text className='text-base font-pregular text-black-100 mt-4'>{log?.body}</Text>
+        <Text className='text-base font-pmedium text-black-100 mt-4'>{log?.body}</Text>
       )}
     </View>
   )
