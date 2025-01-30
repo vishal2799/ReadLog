@@ -29,8 +29,9 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getCurrentUser()
-      .then((res) => {
+    const checkUser = async () => {
+      try {
+        const res = await getCurrentUser();
         if (res) {
           setIsLogged(true);
           setUser(res);
@@ -38,17 +39,20 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
           setIsLogged(false);
           setUser(null);
         }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
+      } catch (error) {
+        console.log("Error fetching current user:", error);
+        setIsLogged(false);
+        setUser(null);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    checkUser();
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ isLogged, setIsLogged, user, setUser, loading}}>
+    <GlobalContext.Provider value={{ isLogged, setIsLogged, user, setUser, loading }}>
       {children}
     </GlobalContext.Provider>
   );
