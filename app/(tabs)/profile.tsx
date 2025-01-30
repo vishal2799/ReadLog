@@ -32,15 +32,16 @@ const profile = () => {
                 resizeMode='cover'
               />
             </View>
-            <Text className='text-black text-3xl font-psemibold tracking-widest text-center mt-8'>
+            <Text className='text-secondary text-3xl font-psemibold tracking-widest text-center mt-6'>
               {user?.username}
               </Text>
-              <Text className='w- text-lg text-black-200 font-pmedium mt-4'>Happy Reading!</Text>
+              <Text className='text-lg text-black-100 font-pregular mt-2'>{user?.email}</Text>
               <CustomButton
             title='Logout'
             handlePress={logout}
-            containerStyles='w-4/5 mt-7'
+            containerStyles='w-4/5 mt-6'
           />
+          <Text className='text-xl tracking-widest text-black font-pmedium mt-6'>Happy Reading!</Text>
           </View>
         </View>
       </ScrollView>

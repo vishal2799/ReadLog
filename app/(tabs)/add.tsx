@@ -27,13 +27,14 @@ const add = () => {
     totalPages: '0',
   });
 
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  const [selectedLanguage, setSelectedLanguage] = useState('');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (isEditing) {
-      const book:any = books?.find((b) => b?.$id === bookId); // Find the book by ID
+    if (bookId) {
+      // Editing Mode: Populate form with book details
+      const book: any = books?.find((b) => b?.$id === bookId);
       if (book) {
         setForm({
           title: book?.title || '',
@@ -42,8 +43,13 @@ const add = () => {
         });
         setSelectedLanguage(book?.genre || '');
       }
+    } else {
+      // Adding Mode: Reset form when bookId is undefined
+      setForm({ title: '', author: '', totalPages: '0' });
+      setSelectedLanguage('');
     }
   }, [bookId, books]);
+  
 
   const submit = async () => {
     if (form.title === '' || form.author === '' || form.totalPages === '') {
@@ -64,6 +70,7 @@ const add = () => {
           refetch();
           setForm({ title: '', author: '', totalPages: '0' });
           ToastAndroid.show('Book updated successfully', ToastAndroid.SHORT);
+          router.setParams({ bookId: undefined });
           router.push('/(tabs)/home/reading');
         } catch (error) {
           ToastAndroid.show((error as Error).message, ToastAndroid.SHORT);
