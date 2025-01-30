@@ -29,8 +29,8 @@ const reading = () => {
               // Find more Lottie files at https://lottiefiles.com/featured
               source={require('@/assets/bookshelf.json')}
             />
-                <Text className='text-center text-2xl text-black font-pmedium mt-4'>No books available</Text>
-                <Text className='text-center text-base font-pregular text-black-200 mt-3'>You need to add a book {"\n"}before logging your reading progress.</Text>
+                <Text className='text-center text-2xl text-black font-pmedium mt-4'>No books in progress</Text>
+                <Text className='text-center text-base font-pregular text-black-200 mt-3'>No books are currently in progress. Start reading by adding a book!</Text>
                 <CustomButton title='Add Book' handlePress={() => router.navigate('/(tabs)/add')} containerStyles='w-full mt-7' />
               </View>
       );
