@@ -7,6 +7,8 @@ import LottieView from 'lottie-react-native';
 import GenreChart from '@/components/GenreChart';
 import ReadingBarChart from '@/components/ReadingBarChart';
 import { AntDesign } from '@expo/vector-icons';
+import CustomButton from '@/components/CustomButton';
+import { router } from 'expo-router';
 
 const Home = () => {
     const { books, loading } = useBooks();
@@ -17,7 +19,7 @@ const Home = () => {
 
     if (!books || books?.length === 0) {
       return (
-        <View className='h-full w-full justify-center items-center px-3 my-3'>
+        <View className='h-full w-full justify-center items-center px-6 my-3'>
                   <LottieView
                 autoPlay
                 ref={animation}
@@ -29,7 +31,9 @@ const Home = () => {
                 // Find more Lottie files at https://lottiefiles.com/featured
                 source={require('@/assets/bookshelf.json')}
               />
-                  <Text className='text-center text-lg font-pregular mt-4'>No books found! 📚</Text>
+                  <Text className='text-center text-2xl text-black font-pmedium mt-4'>No stats available yet</Text>
+                  <Text className='text-center text-base font-pregular text-black-200 mt-3'>Start tracking your reading journey{"\n"} by adding your first book!</Text>
+                  <CustomButton title='Add Book' handlePress={() => router.navigate('/(tabs)/add')} containerStyles='w-full mt-7' />
                 </View>
       );
     }

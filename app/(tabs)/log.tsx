@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Image, ToastAndroid } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '@/constants';
 import FormField from '@/components/FormField';
@@ -9,8 +9,10 @@ import { router } from 'expo-router';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { addLog, getAllLogs, updateBookStatus } from '@/lib/appwrite';
 import { useBooks } from '@/context/BooksContext';
+import LottieView from 'lottie-react-native';
 
 const Log = () => {
+   const animation = useRef<LottieView>(null);
   const { user } = useGlobalContext();
   const { books, refetch } = useBooks();
   const [form, setForm] = useState({
@@ -102,6 +104,27 @@ const Log = () => {
     const numericValue = text.replace(/[^0-9]/g, '');
     setForm({ ...form, totalPages: numericValue });
   };
+
+  if (!books || books?.length === 0) {
+    return (
+      <View className='h-full w-full justify-center items-center px-6 my-3'>
+                <LottieView
+              autoPlay
+              ref={animation}
+              style={{
+                width: 200,
+                height: 200,
+                backgroundColor: 'transparent',
+              }}
+              // Find more Lottie files at https://lottiefiles.com/featured
+              source={require('@/assets/bookshelf.json')}
+            />
+                <Text className='text-center text-2xl text-black font-pmedium mt-4'>No books available</Text>
+                <Text className='text-center text-base font-pregular text-black-200 mt-3'>You need to add a book {"\n"}before logging your reading progress.</Text>
+                <CustomButton title='Add Book' handlePress={() => router.navigate('/(tabs)/add')} containerStyles='w-full mt-7' />
+              </View>
+    );
+  }
 
   return (
     <SafeAreaView className='bg-primary h-full'>

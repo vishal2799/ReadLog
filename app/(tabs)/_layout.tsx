@@ -2,7 +2,6 @@ import { Redirect, Tabs } from 'expo-router'
 import { useGlobalContext } from '@/context/GlobalProvider';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Text, View } from 'react-native';
-
 import { FC } from 'react';
 import { BooksProvider } from '@/context/BooksContext';
 import { StatusBar } from 'expo-status-bar';

@@ -11,7 +11,7 @@ import { images } from '@/constants';
 import FormField from '@/components/FormField';
 import { Picker } from '@react-native-picker/picker';
 import CustomButton from '@/components/CustomButton';
-import { router, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { addBook, updateBook } from '@/lib/appwrite';
 import { useBooks } from '@/context/BooksContext';
