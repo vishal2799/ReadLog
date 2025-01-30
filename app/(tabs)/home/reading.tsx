@@ -11,9 +11,9 @@ const reading = () => {
       return <ActivityIndicator animating={loading} color="#000" size='large' />
     }
   
-    const readingBooks = books?.filter((book) => book.status === "Reading") || [];
+    const readingBooks = books?.filter((book) => book?.status === "Reading") || [];
   
-    if (readingBooks.length === 0) {
+    if (readingBooks?.length === 0) {
       return (
         <View className='h-full w-full justify-center items-center px-3 my-3'>
                   <LottieView
@@ -35,7 +35,7 @@ const reading = () => {
   return (
     <ScrollView>
         <View className='h-full w-full justify-center items-center px-4 my-3'>
-            {readingBooks.map((el:any) => (
+            {readingBooks?.map((el:any) => (
                 <BookCard key={el?.$id} variant='Reading' containerStyles='mb-5' data={el} />
             ))}
         </View>

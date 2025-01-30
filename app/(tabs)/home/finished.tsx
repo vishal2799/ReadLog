@@ -3,7 +3,6 @@ import React, { useRef } from 'react'
 import BookCard from '@/components/BookCard'
 import { useBooks } from '@/context/BooksContext';
 import LottieView from 'lottie-react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const finished = () => {
   const { books, loading } = useBooks();
@@ -13,9 +12,9 @@ const finished = () => {
       return <ActivityIndicator animating={loading} color="#000" size='large' />
     }
   
-    const readingBooks = books?.filter((book) => book.status === "Finished") || [];
+    const readingBooks = books?.filter((book) => book?.status === "Finished") || [];
   
-    if (readingBooks.length === 0) {
+    if (readingBooks?.length === 0) {
       return (
         <View className='h-full w-full justify-center items-center px-3 my-3'>
           <LottieView
@@ -38,8 +37,8 @@ const finished = () => {
     <>
     <ScrollView>
         <View className='h-full w-full justify-center items-center px-4 my-3'>
-            {readingBooks.map((book:any) => (
-                <BookCard key={book.$id} data={book} variant='Finished' containerStyles='mb-5' />
+            {readingBooks?.map((book:any) => (
+                <BookCard key={book?.$id} data={book} variant='Finished' containerStyles='mb-5' />
             ))}
         </View>
     </ScrollView>

@@ -3,7 +3,6 @@ import "../global.css";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import GlobalProvider from "@/context/GlobalProvider";
-import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 

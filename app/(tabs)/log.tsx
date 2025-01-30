@@ -26,7 +26,7 @@ const Log = () => {
 
   useEffect(() => {
     // Set the first book as default when the screen loads
-    if (books && books.length > 0) {
+    if (books && books?.length > 0) {
       setSelectedBook(books[0]?.$id); // Pre-select the first book
     }
   }, [books]);
@@ -41,22 +41,22 @@ const Log = () => {
           body: form.notes,
           bookId: selectedBook,
           pages_read: Number(form.totalPages),
-          userId: user.$id,
+          userId: user?.$id,
         };
 
         if (!selectedBook) {
           throw new Error('No book selected');
         }
         const logs = await getAllLogs(selectedBook);
-        const isFirstLog = logs.length === 0;
-        const totalPagesRead = logs.reduce((sum, log) => sum + log.pages_read, 0) + newLog.pages_read;
+        const isFirstLog = logs?.length === 0;
+        const totalPagesRead = logs?.reduce((sum, log) => sum + log?.pages_read, 0) + newLog?.pages_read;
 
         if (isFirstLog) {
           await updateBookStatus(selectedBook, 'Reading');
         }
   
-        const selectedBookDetails = books?.find((b) => b.$id === selectedBook);
-        if (selectedBookDetails && totalPagesRead >= selectedBookDetails.total_pages) {
+        const selectedBookDetails = books?.find((b) => b?.$id === selectedBook);
+        if (selectedBookDetails && totalPagesRead >= selectedBookDetails?.total_pages) {
           await updateBookStatus(selectedBook, 'Finished');
         }
   
@@ -109,7 +109,7 @@ const Log = () => {
         <View className='h-full w-full justify-center items-center px-4 my-6'>
           <View className='w-full flex flex-col items-center justify-center text-center mb-10'>
             <Image
-              source={images.LogoSmall}
+              source={images?.LogoSmall}
               className='w-[100px] h-[70px]'
               resizeMode='contain'
             />
@@ -135,9 +135,9 @@ const Log = () => {
               >
                 {books?.map((book) => (
                   <Picker.Item
-                    key={book.$id}
-                    label={book.title}
-                    value={book.$id}
+                    key={book?.$id}
+                    label={book?.title}
+                    value={book?.$id}
                   />
                 ))}
               </Picker>

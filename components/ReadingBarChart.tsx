@@ -9,18 +9,18 @@ const ReadingBarChart = () => {
   const [barData, setBarData] = useState<{ value: number; label: string; frontColor: string }[]>([]);
 
   useEffect(() => {
-    if (books && books.length > 0) {
+    if (books && books?.length > 0) {
       // Array to store pages read for each day of the current week
       const currentWeekData = Array(7).fill(0);
 
       books.forEach((book) => {
         book.logs?.forEach((log:any) => {
-          const logDate = dayjs(log.$createdAt); // Parse ISO date
-          const dayOfWeek = logDate.day(); // Get the day of the week (0 = Sunday, 6 = Saturday)
+          const logDate = dayjs(log?.$createdAt); // Parse ISO date
+          const dayOfWeek = logDate?.day(); // Get the day of the week (0 = Sunday, 6 = Saturday)
 
           // Check if the log is within the current week
           if (logDate.isSame(dayjs(), "week")) {
-            currentWeekData[dayOfWeek] += log.pages_read;
+            currentWeekData[dayOfWeek] += log?.pages_read;
           }
         });
       });

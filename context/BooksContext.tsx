@@ -29,41 +29,45 @@ const BooksContext = createContext<BooksContextType | undefined>(undefined);
 export const BooksProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useGlobalContext();
 
-  const { data: books, loading: booksLoading, refetch: refetchBooks } = useAppwrite(() => getAllBooks(user?.$id));
+  const { data: books, loading: booksLoading, refetch: refetchBooks } = useAppwrite(
+    () => (user ? getAllBooks(user.$id) : Promise.resolve([]))
+  );
   const [booksWithDetails, setBooksWithDetails] = useState<Book[] | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBooksAndLogs = async () => {
-      if (books) {
-        setLoading(true);
-        try {
-          // Fetch logs for all books
-          const allBooksWithLogs = await Promise.all(
-            books.map(async (book:any) => {
-              const logs = await getAllLogs(book.$id); // Fetch logs for the book
-              const cumulativeProgress = logs.reduce((sum, log) => sum + log.pages_read, 0);
+      if (!books || books.length === 0) {
+        setBooksWithDetails([]); // Prevent crashing if books are empty
+        setLoading(false);
+        return;
+      }
+      
+      setLoading(true);
+      try {
+        const allBooksWithLogs = await Promise.all(
+          books.map(async (book: any) => {
+            const logs = await getAllLogs(book.$id);
+            const cumulativeProgress = logs.reduce((sum, log) => sum + log.pages_read, 0);
 
-              // Calculate progress percentage
-              const progressPercentage = Math.min(
-                (cumulativeProgress / book.total_pages) * 100,
-                100
-              ).toFixed(2);
+            const progressPercentage = Math.min(
+              (cumulativeProgress / book.total_pages) * 100,
+              100
+            ).toFixed(2);
 
-              return {
-                ...book,
-                progressPercentage, // Add calculated progress
-                logs, // Add logs for this book
-              };
-            })
-          );
+            return {
+              ...book,
+              progressPercentage,
+              logs,
+            };
+          })
+        );
 
-          setBooksWithDetails(allBooksWithLogs);
-        } catch (error) {
-          console.error("Error fetching books or logs:", error);
-        } finally {
-          setLoading(false);
-        }
+        setBooksWithDetails(allBooksWithLogs);
+      } catch (error) {
+        console.error("Error fetching books or logs:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -71,7 +75,7 @@ export const BooksProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, [books]);
 
   const refetch = () => {
-    refetchBooks(); // Refetch books and logs
+    refetchBooks();
   };
 
   return (

@@ -4,7 +4,6 @@ import {
   ScrollView,
   Dimensions,
   Image,
-  Alert,
   ToastAndroid,
 } from 'react-native';
 import React, { useState } from 'react';

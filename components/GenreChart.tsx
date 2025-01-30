@@ -9,11 +9,11 @@ const GenreChart = () => {
     const [genreData, setGenreData] = useState<{ value: number; color: string; text: string }[]>([]);
 
     useEffect(() => {
-      if (books && books.length > 0) {
+      if (books && books?.length > 0) {
         // Group books by genre
         const genreCount: Record<string, number> = {};
         books.forEach((book:any) => {
-          const genre = book.genre || "Unknown"; // Default to 'Unknown' if genre is not set
+          const genre = book?.genre || "Unknown"; // Default to 'Unknown' if genre is not set
           genreCount[genre] = (genreCount[genre] || 0) + 1;
         });
   
@@ -41,7 +41,7 @@ const GenreChart = () => {
       return colors[index % colors.length]; // Cycle through colors if genres exceed predefined ones
     };
   
-    if (!genreData.length) {
+    if (!genreData?.length) {
       return <Text>No genre data available</Text>;
     }
   return (
@@ -54,8 +54,8 @@ const GenreChart = () => {
         <View className='flex-row justify-center mt-4 gap-x-2 gap-y-2 flex-wrap'>
         {genreData.map(item => (
               <View key={item.text} className='flex-row items-center gap-2'>
-                <View className='w-4 h-4 rounded-full' style={[{ backgroundColor: item.color }]} />
-                <Text className='text-sm font-plight'>{item.text}</Text>
+                <View className='w-4 h-4 rounded-full' style={[{ backgroundColor: item?.color }]} />
+                <Text className='text-sm font-plight'>{item?.text}</Text>
               </View>
             ))}
         </View>

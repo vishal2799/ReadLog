@@ -12,9 +12,9 @@ const animation = useRef<LottieView>(null);
     return <ActivityIndicator animating={loading} color="#000" size='large' />
   }
 
-  const readingBooks = books?.filter((book) => book.status === "ToRead") || [];
+  const readingBooks = books?.filter((book) => book?.status === "ToRead") || [];
 
-  if (readingBooks.length === 0) {
+  if (readingBooks?.length === 0) {
     return (
       <View className='h-full w-full justify-center items-center px-3 my-3'>
                         <LottieView

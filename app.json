@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "readlog",
+    "name": "ReadLog",
     "slug": "readlog",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -16,7 +16,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.vishal2799.readlog"
+      "package": "com.vishalxcode.readlog"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +37,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "50a4cf56-e4c2-4aac-bdc0-40064ba48719"
+      }
     }
   }
 }

@@ -33,14 +33,14 @@ const add = () => {
 
   useEffect(() => {
     if (isEditing) {
-      const book:any = books?.find((b) => b.$id === bookId); // Find the book by ID
+      const book:any = books?.find((b) => b?.$id === bookId); // Find the book by ID
       if (book) {
         setForm({
-          title: book.title || '',
-          author: book.author || '',
-          totalPages: book.total_pages ? String(book.total_pages) : '0',
+          title: book?.title || '',
+          author: book?.author || '',
+          totalPages: book?.total_pages ? String(book?.total_pages) : '0',
         });
-        setSelectedLanguage(book.genre || '');
+        setSelectedLanguage(book?.genre || '');
       }
     }
   }, [bookId, books]);
@@ -108,7 +108,7 @@ const add = () => {
         <View className='h-full w-full justify-center items-center px-4 my-6'>
           <View className='w-full flex flex-col items-center justify-center text-center mb-10'>
             <Image
-              source={images.LogoSmall}
+              source={images?.LogoSmall}
               className='w-[100px] h-[70px]'
               resizeMode='contain'
             />

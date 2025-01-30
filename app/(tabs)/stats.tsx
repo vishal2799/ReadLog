@@ -15,7 +15,7 @@ const Home = () => {
           return <ActivityIndicator animating={loading} color="#000" size='large' />
     }
 
-    if (!books || books.length === 0) {
+    if (!books || books?.length === 0) {
       return (
         <View className='h-full w-full justify-center items-center px-3 my-3'>
                   <LottieView
@@ -35,17 +35,17 @@ const Home = () => {
     }
 
     // Calculate KPIs
-  const booksRead = books.filter(book => book.status === "Finished").length;
-  const activeBooks = books.filter(book => book.status === "Reading").length;
+  const booksRead = books?.filter(book => book?.status === "Finished").length;
+  const activeBooks = books?.filter(book => book?.status === "Reading").length;
 
   const totalPagesRead = books.reduce(
     (sum, book) =>
-      sum + (book.logs?.reduce((logSum, log) => logSum + log.pages_read, 0) || 0),
+      sum + (book.logs?.reduce((logSum, log) => logSum + log?.pages_read, 0) || 0),
     0
   );
 
   const firstLogDate = books
-    .flatMap(book => book.logs?.map(log => log.body) || [])
+    .flatMap(book => book?.logs?.map(log => log?.body) || [])
     .sort()[0]; // Get the earliest log date
 
   const daysSinceFirstLog = firstLogDate

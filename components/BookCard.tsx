@@ -12,13 +12,13 @@ interface BookCardProps {
 
 const BookCard:React.FC<BookCardProps> = ({containerStyles, variant = 'Reading', data, location}) => {
     const progressPercentage = (progressPercentage:any) => Math.min(
-        Math.ceil(( progressPercentage/ data.total_pages) * 100),
+        Math.ceil(( progressPercentage/ data?.total_pages) * 100),
         100
       );
 
     const bookStatus = (variant:string) => {
         if(variant === 'Reading'){
-          return <Text className='font-psemibold text-sm text-secondary'>{data.progressPercentage}% complete</Text>
+          return <Text className='font-psemibold text-sm text-secondary'>{data?.progressPercentage}% complete</Text>
         } else if(variant === 'ToRead') {
            return (
             <View className='flex-row justify-center items-center gap-1'>
@@ -49,7 +49,7 @@ const BookCard:React.FC<BookCardProps> = ({containerStyles, variant = 'Reading',
                         {bookStatus(variant)}
                     </View>
                     {variant === 'Reading' && (<View className='w-full h-1 bg-gray-200 rounded-sm mt-3'>
-                        <View className='h-full bg-secondary' style={{width: progressPercentage(data.progressPercentage)}}></View>
+                        <View className='h-full bg-secondary' style={{width: progressPercentage(data?.progressPercentage)}}></View>
                     </View>)}
                     
           {location !== 'detail' && (
